@@ -1,0 +1,383 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #5a4a4a;
+    background-color: #fff9f9;
+    background-image: 
+        /* Нежные круги-акценты */
+        radial-gradient(circle at 75% 30%, rgba(255, 230, 230, 0.6) 0%, transparent 25%),
+        radial-gradient(circle at 25% 70%, rgba(255, 220, 220, 0.6) 0%, transparent 25%),
+        /* Основной градиентный фон */
+        linear-gradient(to bottom, 
+            rgba(255, 249, 249, 0.95) 0%, 
+            rgba(255, 245, 245, 0.95) 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #8b5a5a;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+/* Шапка */
+.header {
+    display: flex;
+    min-height: 100vh;
+}
+
+.header-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: rgb(255,241,239);
+    background: linear-gradient(139deg, rgba(255,241,239,1) 0%, rgba(240,175,175,1) 76%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Декоративные элементы для шапки */
+.header-left::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 210, 210, 0.15);
+    z-index: 0;
+}
+
+.header-left::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 200, 200, 0.1);
+    z-index: 0;
+}
+
+.header-left h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #8b5a5a;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.header-left .date {
+    font-size: 1.8rem;
+    color: #8b5a5a;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: #f8f0f0;
+}
+
+.couple-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Секции */
+section {
+    padding: 60px 0;
+    border-bottom: 1px solid rgba(200, 180, 180, 0.2);
+    position: relative;
+}
+
+section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(200, 180, 180, 0.5), 
+        transparent);
+}
+
+.invitation {
+    background: linear-gradient(to bottom, 
+        rgba(255, 250, 250, 0.9), 
+        rgba(255, 245, 245, 0.9));
+    text-align: center;
+}
+
+.invitation-text {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.details {
+    background: linear-gradient(to bottom, 
+        rgba(248, 240, 240, 0.9), 
+        rgba(245, 235, 235, 0.9));
+    text-align: center;
+}
+
+.details-content {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.details h3 {
+    font-size: 1.5rem;
+    margin: 15px 0;
+    color: #8b5a5a;
+}
+
+/* Таймлайн */
+.schedule {
+    background: linear-gradient(to bottom, 
+        rgba(255, 250, 250, 0.9), 
+        rgba(255, 245, 245, 0.9));
+}
+
+.timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    padding: 40px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: rgba(200, 170, 170, 0.3);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+
+.time {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #8b5a5a;
+}
+
+.date {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.event {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(200, 180, 180, 0.2);
+}
+
+/* Другие секции */
+.menu, .gifts, .notes, .confirmation, .dress-code, .closing {
+    text-align: center;
+    background: linear-gradient(to bottom, 
+        rgba(255, 250, 250, 0.9), 
+        rgba(255, 245, 245, 0.9));
+}
+
+.menu p, .gifts p, .notes p, .confirmation p, .dress-code p {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Палитра цветов */
+.color-palette {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.color {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Подвал */
+.footer {
+    text-align: center;
+    padding: 40px 0;
+    background: linear-gradient(135deg, 
+        #8b5a5a, 
+        #7a4a4a);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 20%);
+}
+
+.footer p {
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.social-icons {
+    font-size: 1.5rem;
+}
+
+.social-icons a {
+    color: white;
+    margin: 0 10px;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.social-icons a:hover {
+    color: #f0e6e6;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .header-left h1 {
+        font-size: 3rem;
+    }
+    .header-left .date {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        min-height: auto;
+    }
+    
+    .header-left, .header-right {
+        height: 50vh;
+    }
+    
+    .header-left h1 {
+        font-size: 2.5rem;
+    }
+    
+    .timeline::before {
+        left: 31px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-left h1 {
+        font-size: 2rem;
+    }
+    
+    .color {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .footer p {
+        font-size: 1.1rem;
+    }
+}
