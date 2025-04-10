@@ -216,12 +216,12 @@
     e.preventDefault();
     
     // Добавляем задержку между запросами
-    const now = Date.now();
-    if (now - lastRequestTime < 2000) { // 2 секунды
-        alert('Пожалуйста, подождите перед повторной отправкой');
-        return;
-    }
-    lastRequestTime = now;
+   // const now = Date.now();
+   // if (now - lastRequestTime < 2000) { // 2 секунды
+    //    alert('Пожалуйста, подождите перед повторной отправкой');
+   //     return;
+  //  }
+  //  lastRequestTime = now;
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
