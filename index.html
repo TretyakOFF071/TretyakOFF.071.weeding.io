@@ -156,6 +156,9 @@
     </div>
 
     <script>
+        // Глобальные переменные для состояния
+        let lastRequestTime = 0;
+        
         // Показываем/скрываем дополнительные поля
         document.querySelectorAll('input[name="Присутствие"]').forEach(radio => {
             radio.addEventListener('change', function() {
@@ -164,17 +167,39 @@
             });
         });
         
-        // Обработка формы
+        // Проверка бота при загрузке
+        window.addEventListener('load', async () => {
+            try {
+                const form = document.getElementById('weddingRSVP');
+                const botToken = new FormData(form).get('bot_token');
+                
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
+                if (!response.ok) {
+                    console.warn('Бот временно недоступен');
+                }
+            } catch (e) {
+                console.error('Bot check failed:', e);
+            }
+        });
+        
+        // Единственный обработчик формы
         document.getElementById('weddingRSVP').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            const now = Date.now();
+            if (now - lastRequestTime < 2000) {
+                alert('Пожалуйста, подождите перед повторной отправкой');
+                return;
+            }
+            lastRequestTime = now;
+        
             const formData = new FormData(this);
+            const botToken = formData.get('bot_token');
+            const chatId = formData.get('chat_id');
             const isAttending = formData.get('Присутствие') === 'Да';
             
             try {
-                const botToken = formData.get('bot_token');
-                const chatId = formData.get('chat_id');
-                
+                // Формируем сообщение
                 let message = isAttending 
                     ? `✅ *Новое подтверждение*\n\n` 
                     : `❌ *Гость не сможет прийти*\n\n`;
@@ -188,8 +213,9 @@
                     if (foods.length > 0) message += `*Еда:* ${foods.join(', ')}\n`;
                     if (drinks.length > 0) message += `*Напитки:* ${drinks.join(', ')}\n`;
                 }
-                
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        
+                // Отправка в Telegram
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -198,7 +224,17 @@
                         parse_mode: 'Markdown'
                     })
                 });
+        
+                if (!response.ok) {
+                    const error = await response.json();
+                    if (error.error_code === 429) {
+                        alert('Слишком много запросов. Попробуйте через минуту.');
+                        return;
+                    }
+                    throw new Error(error.description || 'Unknown error');
+                }
                 
+                // Успешная отправка
                 alert(isAttending 
                     ? 'Спасибо! Мы вас ждём!' 
                     : 'Очень жаль! Спасибо, что дали знать.');
@@ -207,64 +243,15 @@
                 document.getElementById('additionalFields').style.display = 'none';
                 
             } catch (error) {
-                console.error(error);
-                alert('Ошибка при отправке. Пожалуйста, свяжитесь с нами.');
+                console.error('Ошибка:', error);
+                
+                if (error.message.includes('invalid token')) {
+                    alert('⚠ Проблема с токеном бота! Свяжитесь с организаторами.');
+                } else {
+                    alert('Ошибка при отправке: ' + error.message);
+                }
             }
         });
-
-        document.getElementById('weddingRSVP').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    // Добавляем задержку между запросами
-   // const now = Date.now();
-   // if (now - lastRequestTime < 2000) { // 2 секунды
-    //    alert('Пожалуйста, подождите перед повторной отправкой');
-   //     return;
-  //  }
-  //  lastRequestTime = now;
-
-    try {
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'Markdown'
-            }),
-            timeout: 5000 // 5 секунд таймаут
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            if (error.error_code === 429) { // Лимит запросов
-                alert('Слишком много запросов. Попробуйте через минуту.');
-            } else {
-                throw new Error(error.description);
-            }
-        }
-        
-    } catch (error) {
-        console.error('Telegram API Error:', error);
-        alert(`Ошибка бота: ${error.message}. Сообщите нам об этом!`);
-        
-        // Автоматическая проверка токена
-        if (error.message.includes('invalid token')) {
-            alert('⚠ Обнаружена проблема с токеном бота!');
-        }
-    }
-
-    window.addEventListener('load', async () => {
-    try {
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/getMe`);
-        if (!response.ok) {
-            document.getElementById('bot-status').textContent = '⚠ Бот временно недоступен';
-        }
-    } catch (e) {
-        console.error('Bot check failed:', e);
-    }
-});
-});
         </script>
 </body>
 </html>
