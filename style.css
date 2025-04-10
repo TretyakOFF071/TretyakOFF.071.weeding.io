@@ -533,6 +533,21 @@ section::before {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+#additionalFields {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Плавное появление */
+#additionalFields[style*="display: block"] {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Адаптивность формы */
 @media (max-width: 768px) {
     .rsvp-form {
