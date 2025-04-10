@@ -303,7 +303,7 @@ section::before {
 /* Подвал */
 .footer {
     text-align: center;
-    padding: 40px 0;
+    padding: 20px 0;
     background: linear-gradient(135deg, #6b6b4a, #5a5a3a);
     color: white;
     position: relative;
